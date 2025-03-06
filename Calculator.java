@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Calculator {
 
@@ -38,8 +37,9 @@ public class Calculator {
 
     // 입력 값을 진행 상황과 재입력 상황에 따라 확인하는 메서드
     static boolean reEnter(String input, int progress) {
-        // 연산 기호를 Set으로 묶음
-        Set<String> operator = Set.of("+", "-", "*", "/", "%");
+        // 입력된 기호를 ENUM에 맞게 변환하여 oper로 출력
+        OperatorType oper = OperatorType.fromSymbol(input);
+
         // 반환될 결괏값
         boolean reEnterS = true;
 
@@ -57,7 +57,7 @@ public class Calculator {
                 break;
             case 2:
                 // 기호 입력 값이 정해진 문자가 아니라면 재입력 요청
-                if (!operator.contains(input)) {
+                if (!OperatorType.containsSymbol(oper)) {
                     reEnterS = false;
                 }
                 // 위의 조건이 아닐 경우 입력은 참으로 변경한다.
@@ -71,7 +71,7 @@ public class Calculator {
                     reEnterS = false;
                 }
                 // 두 번째 입력값이 0일 때 기호가 / 또는 % 라면 재입력 요청
-                else if (input.matches("0") && (input.equals("/") || input.equals("%"))) {
+                else if (input.matches("0") && (oper == OperatorType.QUO || oper == OperatorType.REM)) {
                     reEnterS = false;
                 }
                 // 위의 두 조건이 아닐 경우 입력은 참으로 변경한다.
@@ -84,6 +84,9 @@ public class Calculator {
     }
     // 정수와 실수를 구분하여 계산
     static String calculator(String firstValue, String sign, String secondValue) {
+        // 연산 기호를 Enum의 OperatorType으로 변환 (+ -> SUM)
+        OperatorType oper = OperatorType.fromSymbol(sign);
+
         // num1~2 정수 계산
         int num1 = 0, num2 = 0;
         // num3~4 실수 계산
@@ -97,7 +100,7 @@ public class Calculator {
 
         // 연산 기호가 나누기인 경우
         // 나머지가 0이 맞으면 참 아니라면 거짓
-        if (sign.equals("/")) {
+        if (oper == OperatorType.QUO) {
             quotient = ((Integer.parseInt(firstValue) % Integer.parseInt(secondValue)) == 0);
         }
 
@@ -107,20 +110,20 @@ public class Calculator {
             num3 = Double.parseDouble(firstValue);
             num4 = Double.parseDouble(secondValue);
 
-            switch (sign) {
-                case "+":
+            switch (oper) {
+                case SUM:
                     num3 += num4;
                     break;
-                case "-":
+                case DIF:
                     num3 -= num4;
                     break;
-                case "*":
+                case MUL:
                     num3 *= num4;
                     break;
-                case "/":
+                case QUO:
                     num3 /= num4;
                     break;
-                case "%":
+                case REM:
                     num3 %= num4;
                     break;
             }
@@ -133,20 +136,20 @@ public class Calculator {
             num1 = Integer.parseInt(firstValue);
             num2 = Integer.parseInt(secondValue);
 
-            switch (sign) {
-                case "+":
+            switch (oper) {
+                case SUM:
                     num1 += num2;
                     break;
-                case "-":
+                case DIF:
                     num1 -= num2;
                     break;
-                case "*":
+                case MUL:
                     num1 *= num2;
                     break;
-                case "/":
+                case QUO:
                     num1 /= num2;
                     break;
-                case "%":
+                case REM:
                     num1 %= num2;
                     break;
             }
