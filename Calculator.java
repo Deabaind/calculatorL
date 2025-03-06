@@ -41,46 +41,46 @@ public class Calculator {
         OperatorType oper = OperatorType.fromSymbol(input);
 
         // 반환될 결괏값
-        boolean reEnterS = true;
+        boolean reEnter = true;
 
         // 진행에 따라 입력 값이 올바른 입력 값이 맞는지 확인
         switch (progress) {
             case 1:
                 // 첫 입력 값이 숫자가 아니라면 재입력 요청
                 if (!input.matches("\\d+")) {
-                    reEnterS = false;
+                    reEnter = false;
                 }
                 // 위의 조건이 아닐 경우 입력은 참으로 변경한다.
                 else {
-                    reEnterS = true;
+                    reEnter = true;
                 }
                 break;
             case 2:
                 // 기호 입력 값이 정해진 문자가 아니라면 재입력 요청
                 if (!OperatorType.containsSymbol(oper)) {
-                    reEnterS = false;
+                    reEnter = false;
                 }
                 // 위의 조건이 아닐 경우 입력은 참으로 변경한다.
                 else {
-                    reEnterS = true;
+                    reEnter = true;
                 }
                 break;
             case 3:
                 // 두 번째 입력값이 숫자가 아니라면 재입력 요청
                 if (!input.matches("\\d+")) {
-                    reEnterS = false;
+                    reEnter = false;
                 }
                 // 두 번째 입력값이 0일 때 기호가 / 또는 % 라면 재입력 요청
                 else if (input.matches("0") && (oper == OperatorType.QUO || oper == OperatorType.REM)) {
-                    reEnterS = false;
+                    reEnter = false;
                 }
                 // 위의 두 조건이 아닐 경우 입력은 참으로 변경한다.
                 else {
-                    reEnterS = true;
+                    reEnter = true;
                 }
                 break;
         }
-        return reEnterS;
+        return reEnter;
     }
     // 정수와 실수를 구분하여 계산
     static String calculator(String firstValue, String sign, String secondValue) {
