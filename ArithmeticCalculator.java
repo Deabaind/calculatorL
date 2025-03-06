@@ -20,7 +20,7 @@ public class ArithmeticCalculator {
         // 재입력을 요청하는 변수 (참: 올바른 입력 상태, 거짓: 재입력이 필요한 상태)
         boolean reEnter = true;
 
-        System.out.println("종료는 exit를 입력해주세요");
+        System.out.println("종료는 exit를 기록 확인은 record를 입력해주세요");
         do {
             // 기록 확인
             if (input.equals("record")) {
